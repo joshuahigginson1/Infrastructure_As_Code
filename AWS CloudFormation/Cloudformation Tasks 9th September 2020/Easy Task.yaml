@@ -23,25 +23,10 @@ Resources:
 
       VpcId: !Ref EasyVPC1
 
-  EasyEC2Instance1:
-    Type: AWS::EC2::Instance
-    Properties:
-      AvailabilityZone: eu-west-1a
-      Tenancy: default
-      ImageId: ami-00e1a1c196475d9e1
-      InstanceType: t2.micro
-      KeyName: asbandia-key-pair
-      SubnetId: !Ref EasySubnet1
-      SecurityGroupIds:
-        - !Ref EasySecGroup1
-      Tags:
-        - Key: Name
-          Value: EasyEC2Instance1
-
   EasySecGroup1:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: Enable SSH access
+      GroupDescription: Enable SSH, HTTP, and HTTPS Ingress Access.
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 22
@@ -58,7 +43,6 @@ Resources:
       Tags:
         - Key: Name
           Value: EasySecGroup1
-
 
   EasyIG1:
     Type: AWS::EC2::InternetGateway
@@ -87,4 +71,19 @@ Resources:
       DestinationCidrBlock: 0.0.0.0/0
       GatewayId: !Ref EasyIG1
       RouteTableId: !Ref EasyRouteTable1
+
+  EasyEC2Instance1:
+    Type: AWS::EC2::Instance
+    Properties:
+      AvailabilityZone: eu-west-1a
+      Tenancy: default
+      ImageId: ami-00e1a1c196475d9e1
+      InstanceType: t2.micro
+      KeyName: asbandia-key-pair
+      SubnetId: !Ref EasySubnet1
+      SecurityGroupIds:
+        - !Ref EasySecGroup1
+      Tags:
+        - Key: Name
+          Value: EasyEC2Instance1
 ...
