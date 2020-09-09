@@ -14,7 +14,7 @@ Resources:
   EasySubnet1:
     Type: AWS::EC2::Subnet
     Properties:
-      AvailabilityZone: eu-west-1
+      AvailabilityZone: eu-west-1a
       CidrBlock: 172.13.1.0/24
       MapPublicIpOnLaunch: true
       Tags:
@@ -26,7 +26,7 @@ Resources:
   EasyEC2Instance1:
     Type: AWS::EC2::Instance
     Properties:
-      AvailabilityZone: eu-west-1
+      AvailabilityZone: eu-west-1a
       Tenancy: default
       ImageId: ami-00e1a1c196475d9e1
       InstanceType: t2.micro
