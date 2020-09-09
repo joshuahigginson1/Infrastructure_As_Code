@@ -55,9 +55,9 @@ Resources:
           FromPort: 443
           ToPort: 443
           CidrIp: 0.0.0.0/0
-    Tags:
-      - Key: Name
-        Value: EasySecGroup1
+      Tags:
+        - Key: Name
+          Value: EasySecGroup1
 
 
   EasyIG1:
