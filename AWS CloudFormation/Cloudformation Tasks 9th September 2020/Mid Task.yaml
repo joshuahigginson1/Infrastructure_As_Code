@@ -65,6 +65,7 @@ Resources:
 
   LambdaInstance1:
     Type: AWS::Lambda::Function
+    DependsOn: MindLambdaIAMRole
     Properties:
       Code:
         Code
@@ -77,7 +78,7 @@ Resources:
       Handler: String
       Layers:
         - String
-      Role: String
+      Role: MidLambdaIAMRole
       Runtime: String
       Tags:
         - Tag
@@ -86,9 +87,5 @@ Resources:
         TracingConfig
       VpcConfig:
         VpcConfig
-
-Amazon API Gateway
-
-Lambda Function - Needs a role
 
 ...
