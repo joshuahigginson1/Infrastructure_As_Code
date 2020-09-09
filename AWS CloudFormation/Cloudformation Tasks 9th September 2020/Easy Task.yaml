@@ -14,6 +14,7 @@ Resources:
   EasySubnet1:
     Type: AWS::EC2::Subnet
     Properties:
+      VpcId: !Ref EasyVPC1
       AvailabilityZone: eu-west-1a
       CidrBlock: 172.13.1.0/24
       MapPublicIpOnLaunch: true
@@ -21,12 +22,11 @@ Resources:
         - Key: Name
           Value: EasySubnet1
 
-      VpcId: !Ref EasyVPC1
-
   EasySecGroup1:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Enable SSH, HTTP, and HTTPS Ingress Access.
+      VpcId: !Ref EasyVPC1
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 22
@@ -75,14 +75,12 @@ Resources:
   EasyEC2Instance1:
     Type: AWS::EC2::Instance
     Properties:
-      AvailabilityZone: eu-west-1a
-      Tenancy: default
       ImageId: ami-00e1a1c196475d9e1
       InstanceType: t2.micro
       KeyName: asbandia-key-pair
       SubnetId: !Ref EasySubnet1
       SecurityGroupIds:
-        - !Ref EasySecGroup1
+        - !GetAtt EasySecGroup1.GroupId
       Tags:
         - Key: Name
           Value: EasyEC2Instance1
