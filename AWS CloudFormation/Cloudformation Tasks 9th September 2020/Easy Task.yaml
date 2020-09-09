@@ -1,5 +1,4 @@
 ---
-AWSTemplateFormatVersion: 2010-09-09
 Resources:
   EasyVPC1:
     Type: AWS::EC2::VPC
@@ -78,7 +77,7 @@ Resources:
     Properties:
       AvailabilityZone: eu-west-1a
       Tenancy: default
-      ImageId: ami-00e1a1c196475d9e1
+      ImageId: ami-04137ed1a354f54c4
       InstanceType: t2.micro
       KeyName: asbandia-key-pair
       SubnetId: !Ref EasySubnet1
