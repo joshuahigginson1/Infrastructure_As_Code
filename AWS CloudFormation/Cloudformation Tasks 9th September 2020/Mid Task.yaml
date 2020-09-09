@@ -46,15 +46,49 @@ Resources:
         S3Location
       CloneFrom: String
 
+  RDSInstance1:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceClass: t2.micro
+      DBInstanceIdentifier: String
+      DBName: MidRDSInstance1
+      Engine: mysql
+      EngineVersion: 5.7
+      MasterUsername: admin
+      MasterUserPassword: adminadmin
+      Port: 3306
+      PubliclyAccessible: true
+      StorageType: standard
+      Tags:
+        - Key: Name
+          Value: MidRDSInstance1
 
-
+  LambdaInstance1:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        Code
+      Description: Does something to effect RDS.
+      Environment:
+        Environment
+      FileSystemConfigs:
+        - FileSystemConfig
+      FunctionName: RDSLambdaFunction
+      Handler: String
+      Layers:
+        - String
+      Role: String
+      Runtime: String
+      Tags:
+        - Tag
+      Timeout: Integer
+      TracingConfig:
+        TracingConfig
+      VpcConfig:
+        VpcConfig
 
 Amazon API Gateway
 
 Lambda Function - Needs a role
-
-
-MySQL DB Instance
-
 
 ...
