@@ -1,2 +1,2 @@
-# Infrastructure_As_Code
-A repository for everything to do with IaC.
+# Infrastructure As Code
+A repository for everything to do with IaC!
