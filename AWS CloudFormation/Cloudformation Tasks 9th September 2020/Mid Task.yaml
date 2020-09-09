@@ -1,0 +1,60 @@
+---
+Resources:
+  MidVPC1:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      InstanceTenancy: default
+      Tags:
+        - Key: Name
+          Value: MidVPC1
+
+  MidSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MidVPC1
+      AvailabilityZone: eu-west-1a
+      CidrBlock: 10.0.1.0/24
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: MidSubnet1
+
+  MidLambdaIAMRole1:
+    Type: AWS::IAM::Role
+    Properties:
+      Description: Allows Lambda Function to access DB
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonRDSFullAccess
+      RoleName: MidLambdaIAMRole
+      Tags:
+        - Key: Name
+          Value: MidLambdaIAMRole
+
+  MidRESTAPI1:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: Mid REST API 1
+      Description: Our Mid Tier Rest API, managing requests for Lambda Function
+      ApiKeySourceType: String
+      BinaryMediaTypes:
+        - String
+      Body: Json
+      BodyS3Location:
+        S3Location
+      CloneFrom: String
+
+
+
+
+Amazon API Gateway
+
+Lambda Function - Needs a role
+
+
+MySQL DB Instance
+
+
+...
