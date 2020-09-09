@@ -72,6 +72,12 @@ Resources:
       GatewayId: !Ref EasyIG1
       RouteTableId: !Ref EasyRouteTable1
 
+  AssignRTtoSubnet:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref EasyRouteTable1
+      SubnetId: !Ref EasySubnet1
+
   EasyEC2Instance1:
     Type: AWS::EC2::Instance
     Properties:
