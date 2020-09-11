@@ -17,6 +17,7 @@ resource "aws_vpc" "ChallengeVPC" {
 
 resource "aws_internet_gateway" "ChallengeIG" {
   vpc_id = aws_vpc.ChallengeVPC.id
+  enable_dns_hostnames = true
 
   tags = {
     Name = "Challenge Internet Gateway"
@@ -71,10 +72,10 @@ resource "aws_security_group" "ChallengeSecGroupSSH" {
 
   egress {
     description = "Allow all outbound traffic"
+    protocol = "-1"
     from_port = 0
     to_port = 0
-    protocol = "-1"
-
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
