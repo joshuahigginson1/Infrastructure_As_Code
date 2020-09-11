@@ -77,7 +77,7 @@ resource "aws_security_group" "ChallengeSecGroupSSH" {
 # Create EC2 Instance.
 
 resource "aws_instance" "ChallengeEC2" {
-  ami = ami-04137ed1a354f54c4
+  ami = "ami-04137ed1a354f54c4"
   instance_type = "t2.micro"
   subnet_id = aws_subnet.ChallengeSubnet.id
   vpc_security_group_ids = [aws_security_group.ChallengeSecGroupSSH.id]
