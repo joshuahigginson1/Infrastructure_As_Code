@@ -81,6 +81,7 @@ resource "aws_instance" "ChallengeEC2" {
   instance_type = "t2.micro"
   subnet_id = aws_subnet.ChallengeSubnet.id
   vpc_security_group_ids = [aws_security_group.ChallengeSecGroupSSH.id]
+  key_name = "asbandia-key-pair"
 
     tags = {
       Name = "Challenge EC2"
