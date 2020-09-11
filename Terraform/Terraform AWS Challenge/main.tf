@@ -24,18 +24,6 @@ resource "aws_internet_gateway" "ChallengeIG" {
   }
 }
 
-# Create Subnet and attach to VPC.
-
-resource "aws_subnet" "ChallengeSubnet" {
-  vpc_id     = aws_vpc.ChallengeVPC.id
-  cidr_block = "10.0.1.0/24"
-  map_public_ip_on_launch = true
-
-  tags = {
-    Name = "Challenge Subnet"
-  }
-}
-
 # Create Route Table and attach to VPC.
 
 resource "aws_route_table" "ChallengeRT" {
@@ -51,6 +39,24 @@ resource "aws_route_table" "ChallengeRT" {
   tags = {
     Name = "Challenge Route Table"
   }
+}
+
+# Create Subnet and attach to VPC.
+
+resource "aws_subnet" "ChallengeSubnet" {
+  vpc_id     = aws_vpc.ChallengeVPC.id
+  cidr_block = "10.0.1.0/24"
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "Challenge Subnet"
+  }
+}
+
+# Associate Route Table to Subnet
+resource "aws_route_table_association" "AttachRouteTableToSubnet" {
+  subnet_id      = aws_subnet.ChallengeSubnet.id
+  route_table_id = aws_route_table.ChallengeRT.id
 }
 
 # Create Sec Group.
