@@ -8,6 +8,7 @@ provider "aws" {
 
 resource "aws_vpc" "ChallengeVPC" {
   cidr_block       = "10.0.0.0/16"
+  enable_dns_hostnames = true
   tags = {
     Name = "Challenge VPC"
   }
@@ -17,7 +18,6 @@ resource "aws_vpc" "ChallengeVPC" {
 
 resource "aws_internet_gateway" "ChallengeIG" {
   vpc_id = aws_vpc.ChallengeVPC.id
-  enable_dns_hostnames = true
 
   tags = {
     Name = "Challenge Internet Gateway"
