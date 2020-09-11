@@ -69,6 +69,14 @@ resource "aws_security_group" "ChallengeSecGroupSSH" {
     cidr_blocks = [aws_vpc.ChallengeVPC.cidr_block]
   }
 
+  egress {
+    description = "Allow all outbound traffic"
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+
+  }
+
   tags = {
     Name = "Allow SSH Inbound"
   }
