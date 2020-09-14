@@ -18,6 +18,9 @@ variable "open_internet" {
 variable "vpc_id" {
   description = "The VPC ID."
   default = "This variable can only be referenced later, in main.tf."
+}
 
-
+variable "name" {
+  description = "The Sec Group Name."
+  default = "AWSIntermediateSecGroup"
 }

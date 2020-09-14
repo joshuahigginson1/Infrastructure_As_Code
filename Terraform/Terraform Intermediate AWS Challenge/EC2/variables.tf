@@ -27,7 +27,7 @@ variable vpc_security_group_ids {
 
 
 variable tags {
-  type = "map"
+  type = map(string)
   description = "A map of tags, that we want to include on our EC2 Instance."
   default = {
     key = "DefaultIntermediateEC2Name"

@@ -1,7 +1,7 @@
 # Create a new security group.
 
 resource "aws_security_group" "IntermediateSecGroup1" {
-  name = "IntermediateSecGroup1"
+  name = var.name
   description = "Allow SSH connection"
   vpc_id = var.vpc_id
 
