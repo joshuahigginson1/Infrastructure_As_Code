@@ -14,7 +14,7 @@ resource "aws_security_group" "IntermediateSecGroup1" {
       from_port = port.value
       protocol = "tcp"
       to_port = port.value
-      cidr_blocks = var.open_internet
+      cidr_blocks = [var.open_internet]
     }
   }
 
@@ -25,7 +25,7 @@ resource "aws_security_group" "IntermediateSecGroup1" {
       from_port = port.value
       protocol = "-1"
       to_port = port.value
-      cidr_blocks = var.open_internet
+      cidr_blocks = [var.open_internet]
     }
   }
 }
