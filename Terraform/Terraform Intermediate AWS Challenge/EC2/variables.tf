@@ -1,5 +1,5 @@
 
-variable "ami"{
+variable ami {
   description = "The default AMI - Ubuntu 18.04 Bionic 64 x86, in eu-west-1"
   default = "ami-04137ed1a354f54c4"
 }
@@ -37,4 +37,9 @@ variable tags {
 variable associate_public_ip_address {
   description = "Do we want to give the EC2 instance a public IP address?"
   default = true
+}
+
+variable update_and_upgrade_script {
+  description = "A script to update and upgrade files on apt package manager."
+  default = file("scripts/update_and_upgrade_apt.sh")
 }
