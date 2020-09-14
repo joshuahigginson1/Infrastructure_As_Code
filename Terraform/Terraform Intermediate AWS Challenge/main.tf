@@ -30,7 +30,7 @@ module "AWS_WebServer_EC2_Node2" {
   subnet_id              = module.AWS_VPC.PublicSubnetA_ID
   vpc_security_group_ids = [module.AWS_WebServer_SecGroup1.IntermediateSecGroup1_AWS_ID]
   ami = var.Linux2AMI
-  update_and_upgrade_script = file("scripts/update_and_upgrade_yum.sh")
+  update_and_upgrade_script = "scripts/update_and_upgrade_yum.sh"
   tags = {
     Name = "WebServer_Node2_AMI"
   }
