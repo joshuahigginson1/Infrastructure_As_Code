@@ -41,5 +41,5 @@ variable associate_public_ip_address {
 
 variable update_and_upgrade_script {
   description = "A script to update and upgrade files on apt package manager."
-  default = "scripts/update_and_upgrade_apt.sh"
+  default = "/scripts/update_and_upgrade_apt.sh"
 }
