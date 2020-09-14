@@ -20,7 +20,7 @@ variable subnet_id {
 }
 
 variable vpc_security_group_ids {
-  type = "list"
+  type = list(string)
   description = "A list of our VPC security group IDs."
   default = ["This variable can only be referenced later, in main.tf."]
 }
