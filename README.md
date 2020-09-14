@@ -4,7 +4,8 @@ A repository for everything to do with IaC!
 ## Terraform Cheat Sheet
 
 
-`terraform init
+`
+terraform init
 terraform fmt
 terraform plan
 terraform apply
