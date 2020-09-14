@@ -1,11 +1,11 @@
 variable "ingress_ports" {
-  type        = "list"
+  type        = list(number)
   description = "A list of of our Security Group ingress ports."
   default     = [22, 80, 443]
 }
 
 variable "egress_ports" {
-  type        = "list"
+  type        = list(number)
   description = "A list of of our Security Group egress ports."
   default     = [0]
 }
