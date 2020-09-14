@@ -13,6 +13,7 @@ module "AWS_WebServer_SecGroup1" {
   source        = "./SecurityGroup"
   name          = "WebServerSecGroup"
   vpc_id        = module.AWS_VPC.IntermediateVPC1_ID
+  ingress_ports = [22, 80, 443]
 }
 
 module "AWS_WebServer_EC2_Node1" {

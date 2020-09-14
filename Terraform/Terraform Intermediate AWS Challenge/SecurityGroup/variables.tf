@@ -1,7 +1,7 @@
 variable "ingress_ports" {
   type        = list(number)
   description = "A list of of our Security Group ingress ports."
-  default     = [22, 80, 443]
+  default     = [22]
 }
 
 variable "egress_ports" {
