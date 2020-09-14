@@ -6,7 +6,7 @@ provider "aws" {
 
 module "AWS_VPC" {
   source = "./VPC"
-  name = "IntermediateChallengeVPC"
+  VPCName = "IntermediateChallengeVPC"
 }
 
 module "AWS_WebServer_SecGroup1" {

@@ -2,6 +2,9 @@
 
 resource "aws_vpc" "IntermediateVPC1" {
   cidr_block           = var.IntermediateVPC1_CIDR
+  tags = {
+    Name = var.VPCName
+  }
 }
 
 # Get from AWS: All currently operational availability zones.
