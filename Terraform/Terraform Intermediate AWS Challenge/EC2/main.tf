@@ -3,7 +3,7 @@ resource "aws_instance" "IntermediateEC2Instance" {
   instance_type          = var.instance-type
   key_name               = var.pem-key
   subnet_id              = var.subnet_id
-  vpc_security_group_ids = [var.vpc_security_group_ids]
+  vpc_security_group_ids = var.vpc_security_group_ids
 
   lifecycle {
     create_before_destroy = true
