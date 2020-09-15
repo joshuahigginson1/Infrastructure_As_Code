@@ -1,7 +1,5 @@
 variable "environment" {}
 
-variable "access_key" {}
-
 variable "ami_id" {}
 
 variable "region" {}
