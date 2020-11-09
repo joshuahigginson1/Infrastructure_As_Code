@@ -26,6 +26,12 @@
       "Type": "Number",
       "Description": "Used to force the ASG nodes' UserData to update.",
       "Default": 1
+    },
+
+    "TableThroughput": {
+      "Type": "Number",
+      "Description": "The number of queries per second the table should support.",
+      "Default": 10
     }
 
   },
@@ -240,7 +246,23 @@
       }
     },
 
-    "DynamoTable": {},
+    "DynamoTableForTodos": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "AttributeDefinitions": [{
+            "AttributeName": "id",
+            "AttributeType": "S"
+        }],
+        "KeySchema": [{
+            "AttributeName": "id",
+            "KeyType": "HASH"
+        }],
+        "ProvisionedThroughput": {
+            "ReadCapacityUnits": { "Ref": "TableThroughput" },
+            "WriteCapacityUnits": { "Ref": "TableThroughput" }
+        }
+      }
+    },
 
     "DynamoAccessRole": {},
 
