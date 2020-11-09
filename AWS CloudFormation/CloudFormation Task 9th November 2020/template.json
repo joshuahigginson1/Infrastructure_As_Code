@@ -8,6 +8,12 @@
       "Description": "The Availability Zone to use for the VPC.",
       "AllowedPattern": "^(?!us-west-2d).*$",
       "ConstraintDescription": "Availability zone must not be us-west-2d."
+    },
+
+    "NumberOfNodes": {
+      "Type": "Number",
+      "Description": "The number of EC2 nodes the service should have.",
+      "Default": 2
     }
 
   },
@@ -158,7 +164,7 @@
       }
     },
 
-        "LoadBalancer": {
+    "LoadBalancer": {
       "Type": "AWS::ElasticLoadBalancing::LoadBalancer",
       "Properties": {
         "Listeners": [ { "InstancePort": 8888, "InstanceProtocol": "HTTP", "LoadBalancerPort": 80, "Protocol": "HTTP" } ],
@@ -168,7 +174,7 @@
       }
     },
 
-        "InstancesGroup": {
+    "InstancesGroup": {
       "Type": "AWS::AutoScaling::AutoScalingGroup",
       "Properties": {
         "Cooldown": 60,
