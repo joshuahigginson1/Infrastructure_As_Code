@@ -264,15 +264,81 @@
       }
     },
 
-    "DynamoAccessRole": {},
+    "DynamoAccessRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": { "Service": ["ec2.amazonaws.com"] },
+              "Action": ["sts:AssumeRole"]
+            }
+          ]
+        },
+        "ManagedPolicyArns": [
+          "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
+        ],
+        "Path": "/"
+      }
+    },
 
-    "DynamoAccessInstanceProfile": {},
+    "DynamoAccessInstanceProfile": {
+      "Type": "AWS::IAM::InstanceProfile",
+      "Properties": {
+        "Path": "/",
+        "Roles": [{ "Ref": "DynamoAccessRole" }]
+      }
+    },
 
-    "LBToInstancesSecurityGroup": {},
+    "LBToInstancesSecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Load balancer to instances",
+        "SecurityGroupIngress": [
+          {
+            "FromPort": 8888,
+            "IpProtocol": "TCP",
+            "SourceSecurityGroupId": { "Ref": "InternetToLBSecurityGroup" },
+            "ToPort": 8888
+          }
+        ],
+        "VpcId": { "Ref": "VPC" }
+      }
+    },
 
-    "InternetToLBSecurityGroup": {},
+    "InternetToLBSecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Internet to load balancer",
+        "SecurityGroupIngress": [
+          {
+            "FromPort": 80,
+            "IpProtocol": "TCP",
+            "CidrIp": "0.0.0.0/0",
+            "ToPort": 80
+          }
+        ],
+        "VpcId": { "Ref": "VPC" }
+      }
+    },
 
-    "InstancesToNATSecurityGroup": {}
+    "InstancesToNATSecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Instances to NAT instance",
+        "SecurityGroupIngress": [
+          {
+            "FromPort": 0,
+            "IpProtocol": -1,
+            "SourceSecurityGroupId": { "Ref": "LBToInstancesSecurityGroup" },
+            "ToPort": 65535
+          }
+        ],
+        "VpcId": { "Ref": "VPC" }
+      }
+    }
 
   }
 
