@@ -32,6 +32,14 @@
       "Type": "Number",
       "Description": "The number of queries per second the table should support.",
       "Default": 10
+    },
+
+    "VPCClassBOctet": {
+      "Type": "Number",
+      "Description": "The Class B block to use for the VPC (0-255).",
+      "MaxValue": 255,
+      "MinValue": 0,
+      "Default": 0
     }
 
   },
@@ -42,14 +50,14 @@
     "VPC": {
       "Type": "AWS::EC2::VPC",
       "Properties": {
-        "CidrBlock": "10.0.0.0/16"
+        "CidrBlock": { "Fn::Join": [ "", [ "10.", { "Ref": "VPCClassBOctet" }, ".0.0/16" ] ] }
       }
     },
 
     "PublicSubnet": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
-        "CidrBlock": "10.0.0.0/24",
+        "CidrBlock": { "Fn::Join": [ "", [ "10.", { "Ref": "VPCClassBOctet" }, ".0.0/24" ] ] },
         "MapPublicIpOnLaunch": true,
         "VpcId": { "Ref": "VPC" }
       }
@@ -58,11 +66,10 @@
     "PrivateSubnet": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
-        "AvailabilityZone": { "Ref": "VPC_AZ" },
-        "CidrBlock": "10.0.1.0/24",
+        "AvailabilityZone": { "Ref": "VPCAZ" },
+        "CidrBlock": { "Fn::Join": [ "", [ "10.", { "Ref": "VPCClassBOctet" }, ".1.0/24" ] ] },
         "VpcId": { "Ref": "VPC" }
-      }
-    },
+      },
 
     "GatewayToInternet": {
       "Type": "AWS::EC2::InternetGateway"
@@ -73,7 +80,7 @@
       "DependsOn": ["GatewayAttachmentToVPC"],
       "Properties": {
         "AvailabilityZone": { "Ref": "VPC_AZ" },
-        "ImageId": "IMAGE-ID",
+        "ImageId": { "Fn::FindInMap": [ "AWS_NAT_AMIs", { "Ref": "AWS::Region" }, "AMI" ] },
         "InstanceType": "m3.medium",
         "SecurityGroupIds": [{ "Ref": "InstancesToNATSecurityGroup" }],
         "SubnetId": { "Ref": "PublicSubnet" }
@@ -221,7 +228,7 @@
       "Properties": {
         "AssociatePublicIpAddress": false,
         "IamInstanceProfile": { "Ref": "DynamoAccessInstanceProfile" },
-        "ImageId": "IMAGE-ID",
+        "ImageId": { "Fn::FindInMap": [ "AWS_Linux_AMIs", { "Ref": "AWS::Region" }, "AMI" ] },
         "InstanceMonitoring": true,
         "InstanceType": { "Ref": "NodeSize" },
         "SecurityGroups": [ { "Ref": "LBToInstancesSecurityGroup" } ],
