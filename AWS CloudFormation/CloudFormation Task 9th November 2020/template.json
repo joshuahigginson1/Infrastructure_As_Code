@@ -158,9 +158,39 @@
       }
     },
 
-    "LoadBalancer": {},
+        "LoadBalancer": {
+      "Type": "AWS::ElasticLoadBalancing::LoadBalancer",
+      "Properties": {
+        "Listeners": [ { "InstancePort": 8888, "InstanceProtocol": "HTTP", "LoadBalancerPort": 80, "Protocol": "HTTP" } ],
+        "Scheme": "internet-facing",
+        "SecurityGroups": [ { "Ref": "InternetToLBSecurityGroup" } ],
+        "Subnets": [ { "Ref": "PublicSubnet" } ]
+      }
+    },
 
-    "InstancesGroup": {},
+        "InstancesGroup": {
+      "Type": "AWS::AutoScaling::AutoScalingGroup",
+      "Properties": {
+        "Cooldown": 60,
+        "DesiredCapacity": { "Ref": "NumberOfNodes" },
+        "HealthCheckGracePeriod": 30,
+        "HealthCheckType": "EC2",
+        "LaunchConfigurationName": { "Ref": "InstancesConfig" },
+        "LoadBalancerNames": [{ "Ref": "LoadBalancer" }],
+        "MaxSize": { "Ref": "NumberOfNodes" },
+        "MetricsCollection": [{ "Granularity": "1Minute" }],
+        "MinSize": { "Ref": "NumberOfNodes" },
+        "VPCZoneIdentifier": [{ "Ref": "PrivateSubnet" }]
+      },
+      "UpdatePolicy": {
+        "AutoScalingRollingUpdate": {
+          "MaxBatchSize": 1,
+          "MinInstancesInService": 1,
+          "PauseTime": 30,
+          "WaitOnResourceSignals": false
+        }
+      }
+    },
 
     "InstancesConfig": {},
 
