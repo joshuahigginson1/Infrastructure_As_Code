@@ -11,6 +11,52 @@
 
     "PrivateSubnet": {},
 
-  },
+    "GatewayToInternet": {},
+
+    "NATInstance": {},
+
+    "RoutesForPublicSubnet": {},
+
+    "RoutesForPrivateSubnet": {},
+
+    "GenericNACL": {},
+
+    "GatewayAttachmentToVPC": {},
+
+    "RouteToGateway": {},
+
+    "RouteToNat": {},
+
+    "NACLInboundEntry": {},
+
+    "NACLOutboundEntry": {},
+
+    "NACLBindingForPublicSubnet": {},
+
+    "NACLBindingForPrivateSubnet": {},
+
+    "RoutesBindingForPublicSubnet": {},
+
+    "RoutesBindingForPrivateSubnet": {},
+
+    "LoadBalancer": {},
+
+    "InstancesGroup": {},
+
+    "InstancesConfig": {},
+
+    "DynamoTable": {},
+
+    "DynamoAccessRole": {},
+
+    "DynamoAccessInstanceProfile": {},
+
+    "LBToInstancesSecurityGroup": {},
+
+    "InternetToLBSecurityGroup": {},
+
+    "InstancesToNATSecurityGroup": {}
+
+  }
 
 }
