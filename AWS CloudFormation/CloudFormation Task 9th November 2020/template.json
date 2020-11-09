@@ -1,27 +1,87 @@
 {
   "Description": "My Cloud Academy Labs 2-Tier Scalable API Template",
 
-  "Parameters": {},
+  "Parameters": {
+
+    "VPC_AZ": {
+      "Type": "AWS::EC2::AvailabilityZone::Name",
+      "Description": "The Availability Zone to use for the VPC.",
+      "AllowedPattern": "^(?!us-west-2d).*$",
+      "ConstraintDescription": "Availability zone must not be us-west-2d."
+    }
+
+  },
+
 
   "Resources": {
 
-    "VPC": {},
+    "VPC": {
+      "Type": "AWS::EC2::VPC",
+      "Properties": {
+        "CidrBlock": "10.0.0.0/16"
+      }
+    },
 
-    "PublicSubnet": {},
+    "PublicSubnet": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.0.0.0/24",
+        "MapPublicIpOnLaunch": true,
+        "VpcId": { "Ref": "VPC" }
+      }
+    },
 
-    "PrivateSubnet": {},
+    "PrivateSubnet": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "AvailabilityZone": { "Ref": "VPC_AZ" },
+        "CidrBlock": "10.0.1.0/24",
+        "VpcId": { "Ref": "VPC" }
+      }
+    },
 
-    "GatewayToInternet": {},
+    "GatewayToInternet": {
+      "Type": "AWS::EC2::InternetGateway"
+    },
 
-    "NATInstance": {},
+    "NATInstance": {
+      "Type": "AWS::EC2::Instance",
+      "DependsOn": ["GatewayAttachmentToVPC"],
+      "Properties": {
+        "AvailabilityZone": { "Ref": "VPC_AZ" },
+        "ImageId": "IMAGE-ID",
+        "InstanceType": "m3.medium",
+        "SecurityGroupIds": [{ "Ref": "InstancesToNATSecurityGroup" }],
+        "SubnetId": { "Ref": "PublicSubnet" }
+      }
+    },
 
-    "RoutesForPublicSubnet": {},
+    "RoutesForPublicSubnet": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": { "Ref": "VPC" }
+      }
+    },
+    "RoutesForPrivateSubnet": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": { "Ref": "VPC" }
+      }
+    },
+    "GenericNACL": {
+      "Type": "AWS::EC2::NetworkAcl",
+      "Properties": {
+        "VpcId": { "Ref": "VPC" }
+      }
+    },
 
-    "RoutesForPrivateSubnet": {},
-
-    "GenericNACL": {},
-
-    "GatewayAttachmentToVPC": {},
+    "GatewayAttachmentToVPC": {
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+      "Properties": {
+        "InternetGatewayId": { "Ref": "GatewayToInternet" },
+        "VpcId": { "Ref": "VPC" }
+      }
+    },
 
     "RouteToGateway": {},
 
