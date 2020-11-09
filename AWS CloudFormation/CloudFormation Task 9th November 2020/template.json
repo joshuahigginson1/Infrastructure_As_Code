@@ -14,6 +14,18 @@
       "Type": "Number",
       "Description": "The number of EC2 nodes the service should have.",
       "Default": 2
+    },
+
+    "NodeSize": {
+      "Type": "String",
+      "Description": "The type of node to use for your system",
+      "Default": "m3.medium"
+    },
+
+    "RunNumber": {
+      "Type": "Number",
+      "Description": "Used to force the ASG nodes' UserData to update.",
+      "Default": 1
     }
 
   },
@@ -198,7 +210,35 @@
       }
     },
 
-    "InstancesConfig": {},
+    "InstancesConfig": {
+      "Type": "AWS::AutoScaling::LaunchConfiguration",
+      "Properties": {
+        "AssociatePublicIpAddress": false,
+        "IamInstanceProfile": { "Ref": "DynamoAccessInstanceProfile" },
+        "ImageId": "IMAGE-ID",
+        "InstanceMonitoring": true,
+        "InstanceType": { "Ref": "NodeSize" },
+        "SecurityGroups": [ { "Ref": "LBToInstancesSecurityGroup" } ],
+        "UserData": {
+          "Fn::Base64": {
+            "Fn::Join": [
+              "\n",
+              [
+                "#!/bin/bash",
+                { "Fn::Join": [ "", [ "echo 'Running number ", { "Ref": "RunNumber" }, "' > /tmp/runnum.log" ] ] },
+                "yum install --enablerepo=epel -y git nodejs npm",
+                "npm config set registry http://registry.npmjs.org/",
+                "npm install -g forever@0.14.1",
+                "git clone https://github.com/cloudacademy/dynamo-demo",
+                { "Fn::Join": [  "", [ "export AWS_REGION=", { "Ref": "AWS::Region" } ] ] },
+                "cd dynamo-demo",
+                { "Fn::Join": [ "", [ "forever start server.js --port 8888 --table ", { "Ref": "DynamoTableForTodos" } ] ] }
+              ]
+            ]
+          }
+        }
+      }
+    },
 
     "DynamoTable": {},
 
